@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/password_level_demo.gif">
 <meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/text-FontMetric.png">
 <meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/fontMetrics%E7%9A%84%E5%90%84%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%80%BC.png">
-<meta property="og:updated_time" content="2016-10-27T03:11:34.000Z">
+<meta property="og:updated_time" content="2016-10-27T04:01:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义View系列：打造一个显示密码等级的控件">
 <meta name="twitter:description" content="0. 前言最近项目不是特别紧张，有一点时间可以用来看点东西，于是找了下自定义View相关的文章来看看，毕竟也确实挺久没碰到了。和一基友交流了下，他最近也在看这方面，并且推荐了启舰的系列文章，大致都看了下，感觉讲的很细致，而且也挺全面，这里也推荐下，希望给大家在自定义View这块有所帮助。（传送门在文末会给出）
@@ -168,6 +168,7 @@
 <p>同样也要注意，在此之前需要先设置文字尺寸。<br>不知看到这里，大家有没有想过这些值的正负。我在调试的过程中截了个图：<br><img src="http://oe54edxby.bkt.clouddn.com/fontMetrics%E7%9A%84%E5%90%84%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%80%BC.png" alt=""><br>尼玛啊，真是日了狗。。。API文档里说好的表示的是distance的呢？怎么会有正负值？事实上，我在画文字的过程中就掉这个坑里了，最后通过debug发现了这个坑，所以大家要特别注意，不要再掉里面啦。<br>好了，这几个字段说了这么多，到底有啥用呢？其实是为了drawText的时候计算baseline的坐标服务的。使用Canvas.drawText方法可以画文字，其中有两个参数就是文字的baseline坐标。所以为了把文字draw到色块横向对应的中心线上，我们需要计算出文字的baseline坐标：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// baseline思路：先设为控件的水平中心线，再调整到文本区域的水平中心线上</span></div><div class="line"><span class="comment">// 注意：fontMetrics的top/bottom/ascent/descent属性值，是基于baseline为原点的，上方为负值，下方为正！</span></div><div class="line"><span class="keyword">float</span> baseLine = getPaddingTop() + eachLevelHeight / <span class="number">2</span> + ((Math.abs(fontMetrics.ascent) + Math.abs(fontMetrics.descent)) / <span class="number">2</span> - Math.abs(fontMetrics.descent));</div></pre></td></tr></table></figure></p>
 <p>OK，比较难的baseline坐标值就搞定了。到此，核心的东西就都介绍完了。</p>
 <h3 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h3><p>本文实现了一个简单的密码等级展示效果，目的是回顾一下自定义View的过程。在我看来，自定义View的关键是要理解并掌握Canvas，Paint，Matrix这几个核心的绘制相关类，还有就是各种动画。掌握好这些，要实现一些复杂炫酷的效果就不是困难的事情啦。</p>
+<p>最后，<a href="https://github.com/philipdroid/PasswordLevelView" target="_blank" rel="external">我是demo下载地址</a></p>
 <h3 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h3><p><a href="http://blog.csdn.net/harvic880925/article/details/50995268" target="_blank" rel="external">1.Android自定义控件三部曲文章索引</a></p>
 <p><a href="http://mikewang.blog.51cto.com/3826268/871765/" target="_blank" rel="external">2.Android字符串进阶之三:字体属性及测量(FontMetrics)</a></p>
 
