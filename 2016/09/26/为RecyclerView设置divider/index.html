@@ -18,7 +18,7 @@
 
 继承RecyclerView.ItemDecoration，复写onDraw()/onDrawOver()、getItemOffsets方法；
 通过mRecyclerView.addI">
-<meta property="og:updated_time" content="2016-09-26T11:36:53.000Z">
+<meta property="og:updated_time" content="2016-10-26T16:31:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为RecyclerView设置divider的正确姿势">
 <meta name="twitter:description" content="1. 关于RecyclerView的dividerListView的divider设置起来很简单，只需要在xml中使用divider标签即可轻松实现。相比之下，RecyclerView就麻烦一点了，基本步骤如下：
@@ -158,43 +158,8 @@
 </ul>
 <p>其中，自定义RecyclerView.ItemDecoration类，主要的套路就是在onDraw/onDrawOver方法中，通过Canvas去绘制divider，可以是Rect也可以是drawable，只要Canvas能draw出来都行。这一点相比ListView来讲，可定制性大大提高，可以满足绝大部分的需求了。</p>
 <p>关于ItemDecoration中onDraw/onDrawOver方法，需要注意的是他们的执行顺序，这一点可以看下方法注释，介绍的很清楚了：<br><code>ItemDecoration.onDraw -&gt; itemView的onDraw -&gt; ItemDecoration.onDrawOver</code></p>
-<h3 id="2-举个简单的栗子"><a href="#2-举个简单的栗子" class="headerlink" title="2.举个简单的栗子"></a>2.举个简单的栗子</h3><pre><code>public DrawableItemDecoration(Context context) {
-    mContext = context;
-    mPaint = new Paint();
-    mPaint.setColor(0x99FF0000);
-    mDividerDrawable = mContext.getResources().getDrawable(R.drawable.arrow_right);
-}
-
-@Override
-public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
-    final int top =
-            (parent.getMeasuredHeight() - mDividerDrawable.getIntrinsicHeight()) / 2;
-    final int bottom = top + mDividerDrawable.getIntrinsicHeight();
-    final int childSize = parent.getChildCount();
-    for (int i = 0; i &lt; childSize - 1; i++) {
-        final View child = parent.getChildAt(i);
-        RecyclerView.LayoutParams layoutParams =
-                (RecyclerView.LayoutParams) child.getLayoutParams();
-        final int left = child.getRight() + layoutParams.rightMargin + 10;
-        final int right = left + dividerWidth - 20;
-        mDividerDrawable.setBounds(left, top, right, bottom);
-        mDividerDrawable.draw(canvas);
-    }
-}
-
-@Override
-public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-    super.onDrawOver(c, parent, state);
-}
-
-@Override
-public void getItemOffsets(
-        Rect outRect, View view,
-        RecyclerView parent, RecyclerView.State state) {
-    super.getItemOffsets(outRect, view, parent, state);
-    outRect.set(0, 0, dividerWidth, 0);
-}
-</code></pre><p>可以看到在onDraw方法中，在横向排列RecyclerView的每个item后面，通过Canvas画出了一个drawable来作为divider（这个drawable是一个右向的箭头，类似右尖括号的效果）。这里需要注意的一点是，getItemOffsets方法中需要设置item之间的间隔，否则画出来的divider会覆盖在itemView之上。</p>
+<h3 id="2-举个简单的栗子"><a href="#2-举个简单的栗子" class="headerlink" title="2.举个简单的栗子"></a>2.举个简单的栗子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">DrawableItemDecoration</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    mContext = context;</div><div class="line">	mPaint = <span class="keyword">new</span> Paint();</div><div class="line">	mPaint.setColor(<span class="number">0x99FF0000</span>);</div><div class="line">    mDividerDrawable = mContext.getResources().getDrawable(R.drawable.arrow_right);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> top =</div><div class="line">            (parent.getMeasuredHeight() - mDividerDrawable.getIntrinsicHeight()) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> bottom = top + mDividerDrawable.getIntrinsicHeight();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> childSize = parent.getChildCount();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childSize - <span class="number">1</span>; i++) &#123;</div><div class="line">        <span class="keyword">final</span> View child = parent.getChildAt(i);</div><div class="line">        RecyclerView.LayoutParams layoutParams =</div><div class="line">                (RecyclerView.LayoutParams) child.getLayoutParams();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> left = child.getRight() + layoutParams.rightMargin + <span class="number">10</span>;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> right = left + dividerWidth - <span class="number">20</span>;</div><div class="line">        mDividerDrawable.setBounds(left, top, right, bottom);</div><div class="line">        mDividerDrawable.draw(canvas);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawOver</span><span class="params">(Canvas c, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDrawOver(c, parent, state);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getItemOffsets</span><span class="params">(</span></span></div><div class="line">        Rect outRect, View view,</div><div class="line">        RecyclerView parent, RecyclerView.State state) &#123;</div><div class="line">    <span class="keyword">super</span>.getItemOffsets(outRect, view, parent, state);</div><div class="line">    outRect.set(<span class="number">0</span>, <span class="number">0</span>, dividerWidth, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到在onDraw方法中，在横向排列RecyclerView的每个item后面，通过Canvas画出了一个drawable来作为divider（这个drawable是一个右向的箭头，类似右尖括号的效果）。这里需要注意的一点是，getItemOffsets方法中需要设置item之间的间隔，否则画出来的divider会覆盖在itemView之上。</p>
 <p>完~</p>
 
       
@@ -219,6 +184,15 @@ public void getItemOffsets(
 
   
 <nav id="article-nav">
+  
+    <a href="/2016/10/26/一个显示密码等级的控件PasswordLevelView/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          自定义View系列：打造一个显示密码等级的控件
+        
+      </div>
+    </a>
   
   
     <a href="/2016/09/11/firstBlog/" id="article-nav-older" class="article-nav-link-wrap">
@@ -317,7 +291,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-tag">
     			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/每日点滴/" style="font-size: 10px;">每日点滴</a>
+    				<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/每日点滴/" style="font-size: 10px;">每日点滴</a> <a href="/tags/自定义View/" style="font-size: 10px;">自定义View</a>
     			</div>
     	</section>
     

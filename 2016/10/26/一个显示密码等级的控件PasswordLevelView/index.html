@@ -4,17 +4,25 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>我的个人博客</title>
+  <title>自定义View系列：打造一个显示密码等级的控件 | 我的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="欢迎光临">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的个人博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="0. 前言最近项目不是特别紧张，有一点时间可以用来看点东西，于是找了下自定义View相关的文章来看看，毕竟也确实挺久没碰到了。和一基友交流了下，他最近也在看这方面，并且推荐了启舰的系列文章，大致都看了下，感觉讲的很细致，而且也挺全面，这里也推荐下，希望给大家在自定义View这块有所帮助。（传送门在文末会给出）
+看完文章之后，得来一发才行呀，所谓“纸上得来终觉浅，绝知此事要躬行”嘛。想到了以前项目里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义View系列：打造一个显示密码等级的控件">
+<meta property="og:url" content="http://yoursite.com/2016/10/26/一个显示密码等级的控件PasswordLevelView/index.html">
 <meta property="og:site_name" content="我的个人博客">
-<meta property="og:description" content="欢迎光临">
+<meta property="og:description" content="0. 前言最近项目不是特别紧张，有一点时间可以用来看点东西，于是找了下自定义View相关的文章来看看，毕竟也确实挺久没碰到了。和一基友交流了下，他最近也在看这方面，并且推荐了启舰的系列文章，大致都看了下，感觉讲的很细致，而且也挺全面，这里也推荐下，希望给大家在自定义View这块有所帮助。（传送门在文末会给出）
+看完文章之后，得来一发才行呀，所谓“纸上得来终觉浅，绝知此事要躬行”嘛。想到了以前项目里">
+<meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/password_level_demo.gif">
+<meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/text-FontMetric.png">
+<meta property="og:image" content="http://oe54edxby.bkt.clouddn.com/fontMetrics%E7%9A%84%E5%90%84%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%80%BC.png">
+<meta property="og:updated_time" content="2016-10-27T03:11:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的个人博客">
-<meta name="twitter:description" content="欢迎光临">
+<meta name="twitter:title" content="自定义View系列：打造一个显示密码等级的控件">
+<meta name="twitter:description" content="0. 前言最近项目不是特别紧张，有一点时间可以用来看点东西，于是找了下自定义View相关的文章来看看，毕竟也确实挺久没碰到了。和一基友交流了下，他最近也在看这方面，并且推荐了启舰的系列文章，大致都看了下，感觉讲的很细致，而且也挺全面，这里也推荐下，希望给大家在自定义View这块有所帮助。（传送门在文末会给出）
+看完文章之后，得来一发才行呀，所谓“纸上得来终觉浅，绝知此事要躬行”嘛。想到了以前项目里">
+<meta name="twitter:image" content="http://oe54edxby.bkt.clouddn.com/password_level_demo.gif">
   
   
     <link rel="icon" href="//favicon.png">
@@ -123,9 +131,7 @@
 </nav>
 
       <div class="body-wrap">
-        
-  
-    <article id="post-一个显示密码等级的控件PasswordLevelView" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-一个显示密码等级的控件PasswordLevelView" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -134,8 +140,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/一个显示密码等级的控件PasswordLevelView/">自定义View系列：打造一个显示密码等级的控件</a>
+    <h1 class="article-title" itemprop="name">
+      自定义View系列：打造一个显示密码等级的控件
     </h1>
   
 
@@ -185,125 +191,25 @@
   </div>
 </article>
 
-
-
-
-
-
-
-
-
-
   
-    <article id="post-为RecyclerView设置divider" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/26/为RecyclerView设置divider/">为RecyclerView设置divider的正确姿势</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-关于RecyclerView的divider"><a href="#1-关于RecyclerView的divider" class="headerlink" title="1. 关于RecyclerView的divider"></a>1. 关于RecyclerView的divider</h3><p>ListView的divider设置起来很简单，只需要在xml中使用divider标签即可轻松实现。相比之下，RecyclerView就麻烦一点了，基本步骤如下：</p>
-<ul>
-<li>继承RecyclerView.ItemDecoration，复写onDraw()/onDrawOver()、getItemOffsets方法；</li>
-<li>通过mRecyclerView.addItemDecoration方法，给到RecyclerView来使用；</li>
-</ul>
-<p>其中，自定义RecyclerView.ItemDecoration类，主要的套路就是在onDraw/onDrawOver方法中，通过Canvas去绘制divider，可以是Rect也可以是drawable，只要Canvas能draw出来都行。这一点相比ListView来讲，可定制性大大提高，可以满足绝大部分的需求了。</p>
-<p>关于ItemDecoration中onDraw/onDrawOver方法，需要注意的是他们的执行顺序，这一点可以看下方法注释，介绍的很清楚了：<br><code>ItemDecoration.onDraw -&gt; itemView的onDraw -&gt; ItemDecoration.onDrawOver</code></p>
-<h3 id="2-举个简单的栗子"><a href="#2-举个简单的栗子" class="headerlink" title="2.举个简单的栗子"></a>2.举个简单的栗子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">DrawableItemDecoration</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    mContext = context;</div><div class="line">	mPaint = <span class="keyword">new</span> Paint();</div><div class="line">	mPaint.setColor(<span class="number">0x99FF0000</span>);</div><div class="line">    mDividerDrawable = mContext.getResources().getDrawable(R.drawable.arrow_right);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> top =</div><div class="line">            (parent.getMeasuredHeight() - mDividerDrawable.getIntrinsicHeight()) / <span class="number">2</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> bottom = top + mDividerDrawable.getIntrinsicHeight();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> childSize = parent.getChildCount();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childSize - <span class="number">1</span>; i++) &#123;</div><div class="line">        <span class="keyword">final</span> View child = parent.getChildAt(i);</div><div class="line">        RecyclerView.LayoutParams layoutParams =</div><div class="line">                (RecyclerView.LayoutParams) child.getLayoutParams();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> left = child.getRight() + layoutParams.rightMargin + <span class="number">10</span>;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> right = left + dividerWidth - <span class="number">20</span>;</div><div class="line">        mDividerDrawable.setBounds(left, top, right, bottom);</div><div class="line">        mDividerDrawable.draw(canvas);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDrawOver</span><span class="params">(Canvas c, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDrawOver(c, parent, state);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getItemOffsets</span><span class="params">(</span></span></div><div class="line">        Rect outRect, View view,</div><div class="line">        RecyclerView parent, RecyclerView.State state) &#123;</div><div class="line">    <span class="keyword">super</span>.getItemOffsets(outRect, view, parent, state);</div><div class="line">    outRect.set(<span class="number">0</span>, <span class="number">0</span>, dividerWidth, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到在onDraw方法中，在横向排列RecyclerView的每个item后面，通过Canvas画出了一个drawable来作为divider（这个drawable是一个右向的箭头，类似右尖括号的效果）。这里需要注意的一点是，getItemOffsets方法中需要设置item之间的间隔，否则画出来的divider会覆盖在itemView之上。</p>
-<p>完~</p>
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/09/26/为RecyclerView设置divider/" class="archive-article-date">
-  	<time datetime="2016-09-26T09:45:18.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-26</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/每日点滴/">每日点滴</a></li></ul>
-	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-firstBlog" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/11/firstBlog/">Hello world!</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2016/09/11/firstBlog/" class="archive-article-date">
-  	<time datetime="2016-09-11T12:14:32.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-11</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-
-
+<nav id="article-nav">
   
   
+    <a href="/2016/09/26/为RecyclerView设置divider/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为RecyclerView设置divider的正确姿势</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
 
 
       </div>
@@ -325,8 +231,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
